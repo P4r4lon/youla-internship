@@ -1,25 +1,15 @@
 function checkDate(timestamp) {
-    var day = new Date(timestamp * 1000).getDate();
-    var month = new Date(timestamp * 1000).getMonth();
-    var year = new Date(timestamp * 1000).getFullYear();
-    var hour = new Date(timestamp * 1000).getHours();
 
-    const current_Date = new Date(Date.now());
-    const current_day = current_Date.getDate();
-    const current_month = current_Date.getMonth() + 1;
-    const currentYear = current_Date.getFullYear();
+    //Для начала получим часы дня
+    const hour = new Date(timestamp * 1000).getHours();
+    //Далее получим текущее время в мс
+    let currentDate = Date.now();
 
-    let isSameDate = false;
+    // Так как требуется проверка совпадения дня, нам достаточно сравнить 2 числа, переведенные из секунд и мс в дни:
+    timestamp = Math.floor(timestamp / 86400) // секунды / 60 / 60 / 24
+    currentDate = Math.floor(currentDate / 86400000) // мс / 1000 / 60 / 60 / 24
 
-    if (year == currentYear) {
-        if (month == current_month) {
-            if (day == current_day) {
-                isSameDate = true;
-            } else {
-                isSameDate = false;
-            }
-        }
-    }
+    const isSameDate = currentDate === timestamp //теперь можем сравнить 2 числа без создания новых объектов и вызова методов
 
     return {
         isSameDate: isSameDate,
